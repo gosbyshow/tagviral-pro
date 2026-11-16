@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TagViral Pro — Générateur de tags viraux pour YouTube Shorts et vidéos. Base mise à jour automatiquement tous les 15 jours.">
+<title>TagViral Pro — Générateur de Tags Viraux YouTube</title>
+<style>
+  :root{
+    --bg:#0f0f0f; --bg2:#161616; --card:#1c1c1c; --card2:#232323;
+    --red:#ff0033; --red2:#ff4d6d; --text:#f1f1f1; --muted:#aaaaaa;
+    --green:#2ecc71; --yellow:#f1c40f; --orange:#e67e22;
+    --border:#2e2e2e; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  a{color:var(--red2)}
+  /* HEADER */
+  header{background:linear-gradient(135deg,#1a0508,#0f0f0f 60%);border-bottom:1px solid var(--border);padding:22px 20px 18px;text-align:center;position:relative;overflow:hidden}
+  header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:200px;background:radial-gradient(ellipse,rgba(255,0,51,.22),transparent 70%);pointer-events:none}
+  .logo{font-size:2.2rem;font-weight:900;letter-spacing:-1px}
+  .logo span{color:var(--red)}
+  .tagline{color:var(--muted);margin-top:6px;font-size:.95rem}
+  .status-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:11px}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.5px}
+  .badge-live{background:var(--red);color:#fff;animation:pulse 2s infinite}
+  .badge-info{background:var(--card2);color:var(--muted);border:1px solid var(--border)}
+  .badge-season{background:rgba(241,196,15,.14);color:var(--yellow);border:1px solid rgba(241,196,15,.3)}
+  .badge-update{background:rgba(46,204,113,.15);color:var(--green);border:1px solid rgba(46,204,113,.35);cursor:pointer;display:none}
+  .badge-update.show{display:inline-flex}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+  /* NAV */
+  nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:16px 12px 0}
+  .tab-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:10px 20px;border-radius:30px;cursor:pointer;font-size:.92rem;font-weight:600;transition:.2s}
+  .tab-btn:hover{color:#fff;border-color:var(--red)}
+  .tab-btn.active{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 4px 18px rgba(255,0,51,.35)}
+  main{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+  .panel{display:none;animation:fadeIn .35s ease}
+  .panel.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+  .card h2{font-size:1.25rem;margin-bottom:6px}
+  .card h3{font-size:1.05rem;margin-bottom:10px;color:var(--red2)}
+  .card p.sub{color:var(--muted);font-size:.9rem;margin-bottom:16px;line-height:1.5}
+  label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+  input[type=text],select,textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:12px 14px;font-size:1rem;outline:none;transition:.2s;font-family:inherit}
+  input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,0,51,.15)}
+  textarea{resize:vertical;line-height:1.55;min-height:96px}
+  /* IA */
+  .ai-status{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:.86rem;color:var(--muted);margin-bottom:6px}
+  .dot{width:9px;height:9px;border-radius:50%;background:#666;flex-shrink:0}
+  .dot.ok{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .dot.load{background:var(--yellow);animation:pulse 1.2s infinite}
+  .dot.err{background:var(--red)}
+  .prog{height:5px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-top:10px;display:none}
+  .prog.show{display:block}
+  .prog>div{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--red2));transition:width .3s}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;color:var(--muted);padding:4px 0}
+  .kv b{color:var(--text)}
+  .llm-out{background:#0b0b0b;border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'Consolas',monospace;font-size:.82rem;color:#9fe8b4;white-space:pre-wrap;max-height:210px;overflow:auto;margin-top:10px;line-height:1.5}
+  .kw{display:inline-block;background:rgba(255,0,51,.12);color:var(--red2);border:1px solid rgba(255,0,51,.3);border-radius:8px;padding:4px 10px;font-size:.82rem;margin:3px 3px 0 0;font-weight:600}
+  .muted-note{color:var(--muted);font-size:.82rem;line-height:1.6;margin-top:10px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.row{grid-template-columns:1fr}}
+  .btn{background:var(--red);color:#fff;border:none;padding:13px 28px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;width:100%;margin-top:18px}
+  .btn:hover{background:#e0002d;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,0,51,.35)}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s;font-family:inherit}
+  .btn-ghost:hover{color:#fff;border-color:var(--red)}
+  .btn-sm{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.8rem;transition:.2s}
+  .btn-sm:hover{border-color:var(--red);color:var(--red2)}
+  /* TAGS */
+  .tag-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tag-chip{display:inline-flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--border);border-radius:24px;padding:7px 13px;font-size:.88rem;cursor:pointer;transition:.15s;user-select:none}
+  .tag-chip:hover{border-color:var(--red);transform:translateY(-1px)}
+  .tag-chip.seasonal{border-color:rgba(241,196,15,.45);background:rgba(241,196,15,.08)}
+  .tag-chip .score{font-size:.72rem;font-weight:800;padding:2px 7px;border-radius:10px}
+  .s-high{background:rgba(46,204,113,.18);color:var(--green)}
+  .s-mid{background:rgba(241,196,15,.18);color:var(--yellow)}
+  .s-low{background:rgba(230,126,34,.18);color:var(--orange)}
+  .tier-label{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 0 4px}
+  .tier-label b{color:var(--red2)}
+  .scorebar{height:6px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-top:5px}
+  .scorebar>div{height:100%;border-radius:4px;transition:width .6s ease}
+  /* TRENDS */
+  .trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .trend-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.2s}
+  .trend-card:hover{border-color:var(--red);transform:translateY(-3px)}
+  .trend-card .emoji{font-size:1.8rem}
+  .trend-card h4{margin:8px 0 6px;font-size:1.02rem}
+  .trend-card p{color:var(--muted);font-size:.88rem;line-height:1.55}
+  .trend-card .hot{display:inline-block;background:rgba(255,0,51,.15);color:var(--red2);font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:10px;margin-top:10px;letter-spacing:.5px}
+  /* PILLS & LIST */
+  .cat-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .cat-pill{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:24px;cursor:pointer;font-size:.88rem;font-weight:600;transition:.2s;font-family:inherit}
+  .cat-pill:hover{color:#fff}
+  .cat-pill.active{background:var(--red);color:#fff;border-color:var(--red)}
+  .tag-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:.15s;cursor:pointer}
+  .tag-card:hover{border-color:var(--red)}
+  .tag-card .t{font-weight:700;font-size:1rem}
+  .tag-card .meta{color:var(--muted);font-size:.78rem;margin-top:2px}
+  .tag-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  /* RESULT */
+  .result-box{background:var(--bg2);border:1px dashed var(--border);border-radius:10px;padding:16px;font-family:'Consolas',monospace;font-size:.92rem;line-height:1.8;word-break:break-word;margin-top:14px;white-space:pre-wrap}
+  .empty-state{text-align:center;color:var(--muted);padding:36px 16px}
+  .empty-state .big{font-size:2.6rem;margin-bottom:10px}
+  /* TOAST */
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:12px 26px;border-radius:30px;font-weight:700;font-size:.92rem;transition:.35s;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  /* TIPS */
+  .tip{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+  .tip:last-child{border-bottom:none}
+  .tip .num{background:var(--red);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:.9rem}
+  .tip p{color:var(--muted);font-size:.92rem;line-height:1.6}
+  .tip p b{color:var(--text)}
+  .history-item{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.88rem;gap:10px}
+  .formula{background:var(--bg2);border-left:3px solid var(--red);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:8px;font-size:.92rem;cursor:pointer;transition:.15s}
+  .formula:hover{background:var(--card2)}
+  .formula small{color:var(--muted);display:block;margin-top:2px}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:6px}
+  .info-tile{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+  .info-tile .v{font-size:1.5rem;font-weight:900;color:var(--red2)}
+  .info-tile .l{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;padding:24px;border-top:1px solid var(--border);line-height:1.7}
+  .step{display:flex;gap:12px;margin-bottom:14px}
+  .step .n{background:var(--card2);border:1px solid var(--border);color:var(--red2);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:.85rem}
+  .step p{color:var(--muted);font-size:.9rem;line-height:1.6}
+  .step p b{color:var(--text)}
+  code{background:var(--bg2);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.85rem;color:var(--yellow)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🔥 Tag<span>Viral</span> Pro</div>
+  <div class="tagline">Générateur &amp; détecteur de tags viraux pour YouTube Shorts et vidéos</div>
+  <div class="status-row">
+    <span class="badge badge-live" id="badge-version">● CHARGEMENT…</span>
+    <span class="badge badge-info" id="badge-next">mise à jour auto tous les 15 jours</span>
+    <span class="badge badge-season" id="badge-season" style="display:none"></span>
+    <span class="badge badge-update" id="badge-update" onclick="location.reload()">🔄 Nouvelle version disponible — recharger</span>
+  </div>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-tab="generator">⚡ Générateur</button>
+  <button class="tab-btn" data-tab="trending">📈 Tags Tendances</button>
+  <button class="tab-btn" data-tab="trends">🎬 Tendances du Moment</button>
+  <button class="tab-btn" data-tab="titles">✍️ Titres Viraux</button>
+  <button class="tab-btn" data-tab="ai">🧠 Tags par IA</button>
+  <button class="tab-btn" data-tab="tips">💡 Conseils SEO</button>
+  <button class="tab-btn" data-tab="update">🔄 Mises à jour</button>
+</nav>
+
+<main>
+
+<!-- GÉNÉRATEUR -->
+<section class="panel active" id="panel-generator">
+  <div class="card">
+    <h2>⚡ Générateur intelligent de tags</h2>
+    <p class="sub">Entrez le sujet de votre vidéo : l'algorithme applique la <b>formule en 3 niveaux</b> des créateurs viraux (tags larges + niche + longue traîne) et attribue un score de viralité à chaque tag.</p>
+
+    <label for="topic">🎯 Sujet / titre de votre vidéo</label>
+    <input type="text" id="topic" placeholder="Ex : recette de pancakes moelleux, gameplay Fortnite, routine matin...">
+
+    <div class="row">
+      <div>
+        <label for="niche">📂 Niche / catégorie</label>
+        <select id="niche"></select>
+      </div>
+      <div>
+        <label for="platform">📱 Format</label>
+        <select id="platform">
+          <option value="shorts">YouTube Shorts (vertical, &lt; 60s)</option>
+          <option value="video">Vidéo longue (classique)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="lang">🌍 Langue des tags</label>
+        <select id="lang">
+          <option value="en">Anglais (recommandé — portée mondiale)</option>
+          <option value="fr">Français (audience francophone)</option>
+          <option value="mix">Mixte EN + FR</option>
+        </select>
+      </div>
+      <div>
+        <label for="count">🔢 Nombre de tags</label>
+        <select id="count">
+          <option value="8">8 tags (optimal Shorts)</option>
+          <option value="12" selected>12 tags</option>
+          <option value="20">20 tags (max vidéo longue)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" onclick="generateTags()">🚀 Générer mes tags viraux</button>
+
+    <div id="gen-results" style="margin-top:22px">
+      <div class="empty-state">
+        <div class="big">🎯</div>
+        Vos tags générés apparaîtront ici avec leur score de viralité.<br>Cliquez sur un tag pour le copier.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="history-card" style="display:none">
+    <h3>🕘 Historique de vos générations</h3>
+    <div id="history-list"></div>
+    <button class="btn-ghost" onclick="clearHistory()" style="margin-top:10px">Effacer l'historique</button>
+  </div>
+</section>
+
+<!-- TAGS TENDANCES -->
+<section class="panel" id="panel-trending">
+  <div class="card">
+    <h2>📈 Base de tags tendances</h2>
+    <p class="sub" id="trending-sub">Cliquez sur un tag pour le copier.</p>
+    <div class="cat-pills" id="cat-pills"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
+      <input type="text" id="tag-search" placeholder="🔍 Rechercher un tag..." style="flex:1;min-width:200px" oninput="renderTagList()">
+      <select id="sort-mode" onchange="renderTagList()" style="width:auto">
+        <option value="score">Tri : meilleur score</option>
+        <option value="alpha">Tri : A → Z</option>
+      </select>
+    </div>
+    <div class="tag-list" id="tag-list"></div>
+  </div>
+</section>
+
+<!-- TENDANCES DU MOMENT -->
+<section class="panel" id="panel-trends">
+  <div class="card">
+    <h2>🎬 Ce qui devient viral en ce moment</h2>
+    <p class="sub" id="trends-sub">Formats qui performent actuellement sur YouTube Shorts.</p>
+    <div class="trend-grid" id="trend-grid"></div>
+  </div>
+</section>
+
+<!-- TITRES -->
+<section class="panel" id="panel-titles">
+  <div class="card">
+    <h2>✍️ Formules de titres viraux</h2>
+    <p class="sub">Cliquez sur une formule pour la copier, puis remplacez [SUJET] par votre thème.</p>
+    <div id="formula-list"></div>
+  </div>
+  <div class="card">
+    <h3>🔎 Analyser mon titre</h3>
+    <p class="sub">Collez votre titre pour obtenir un score et des suggestions d'amélioration.</p>
+    <input type="text" id="title-input" placeholder="Ex : Ma recette de pancakes">
+    <button class="btn" onclick="analyzeTitle()">Analyser le titre</button>
+    <div id="title-result"></div>
+  </div>
+</section>
+
+<!-- TAGS PAR IA -->
+<section class="panel" id="panel-ai">
+  <div class="card">
+    <h2>🧠 Trouver les tags d'une vidéo avec une IA locale</h2>
+    <p class="sub">Un modèle <b>Qwen2.5-0.5B</b> tourne <b>dans votre navigateur</b> (aucune donnée envoyée à un serveur). Il analyse un titre, une description ou une transcription, puis rapproche les mots-clés de votre base de tags notés. Il ne lit pas directement une URL YouTube et ne consulte pas les volumes de recherche.</p>
+
+    <div class="ai-status">
+      <span class="dot" id="ai-dot"></span>
+      <span id="ai-status-text">IA non chargée — cliquez sur « Charger l'IA »</span>
+    </div>
+    <div class="prog" id="ai-prog"><div id="ai-prog-bar"></div></div>
+
+    <div class="row" style="margin-top:16px">
+      <div>
+        <label for="ai-model">🤖 Modèle</label>
+        <select id="ai-model">
+          <option value="onnx-community/Qwen2.5-0.5B-Instruct|q4f16">Qwen2.5-0.5B · q4f16 (recommandé, ~350 Mo)</option>
+          <option value="onnx-community/Qwen2.5-0.5B-Instruct|q4">Qwen2.5-0.5B · q4 (plus léger, plus lent)</option>
+          <option value="onnx-community/Qwen2.5-0.5B-Instruct|fp16">Qwen2.5-0.5B · fp16 (précision max, ~1 Go)</option>
+        </select>
+      </div>
+      <div>
+        <label for="ai-device">⚙️ Moteur d'exécution</label>
+        <select id="ai-device">
+          <option value="auto">Automatique (WebGPU → WASM)</option>
+          <option value="webgpu">WebGPU uniquement (rapide)</option>
+          <option value="wasm">WASM uniquement (compatible partout)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" onclick="aiLoad()">⬇️ Charger l'IA dans le navigateur</button>
+    <p class="muted-note">Le téléchargement se fait une seule fois puis le modèle est mis en cache. Comptez 350 Mo à 1 Go. WebGPU est nécessaire pour une vitesse correcte (Chrome/Edge 113+, Safari 18+).</p>
+  </div>
+
+  <!-- ÉTAPE 1 : décrire la vidéo -->
+  <div class="card">
+    <h3>1️⃣ Décrivez la vidéo</h3>
+    <p class="sub">Utilisez ce que vous avez sous la main. Plus le texte est riche, meilleurs sont les tags.</p>
+
+    <label for="ai-title">📌 Titre de la vidéo</label>
+    <input type="text" id="ai-title" placeholder="Ex : J'ai testé la recette de pancakes la plus virale de TikTok">
+
+    <label for="ai-desc">📝 Description / script / transcription</label>
+    <textarea id="ai-desc" placeholder="Collez ici la description YouTube, votre script, ou la transcription automatique de l'audio (YouTube Studio → Sous-titres → Transcription)."></textarea>
+
+    <div class="row">
+      <div>
+        <label for="ai-niche">📂 Niche</label>
+        <select id="ai-niche"></select>
+      </div>
+      <div>
+        <label for="ai-lang">🌍 Langue de sortie</label>
+        <select id="ai-lang">
+          <option value="fr">Français</option>
+          <option value="en">Anglais</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="ai-video">🎬 (Optionnel) Fichier vidéo — analyse des images</label>
+    <input type="file" id="ai-video" accept="video/*" onchange="aiVideoChosen()">
+    <p class="muted-note" id="ai-video-note">Sans fichier : l'IA travaille sur le texte. Avec un fichier : des images clés sont extraites toutes les X secondes et analysées par un modèle vision (BLIP). Le fichier ne quitte jamais votre ordinateur.</p>
+
+    <button class="btn" onclick="aiAnalyze()">🚀 Extraire les mots-clés et trouver les tags</button>
+  </div>
+
+  <!-- ÉTAPE 2 : résultats -->
+  <div class="card" id="ai-result-card" style="display:none">
+    <h3>2️⃣ Résultat de l'analyse</h3>
+    <div id="ai-kw-zone"></div>
+    <div class="llm-out" id="ai-raw"></div>
+    <div id="ai-tags-zone" style="margin-top:18px"></div>
+  </div>
+
+  <div class="card">
+    <h3>ℹ️ Ce que cette IA peut et ne peut pas faire</h3>
+    <div class="kv"><span>✅ Extraire mots-clés d'un titre + description + transcription</span><b>Oui</b></div>
+    <div class="kv"><span>✅ Traduire un concept FR en tags EN viraux</span><b>Oui</b></div>
+    <div class="kv"><span>✅ Décrire des images extraites d'un fichier vidéo</span><b>Oui (modèle vision à part)</b></div>
+    <div class="kv"><span>✅ Transcrire l'audio d'une vidéo</span><b>Oui (Whisper, ci-dessous)</b></div>
+    <div class="kv"><span>❌ Connaître les tags exacts d'une vidéo YouTube par son URL</span><b>Non — impossible sans API YouTube</b></div>
+    <div class="kv"><span>❌ Connaître les volumes de recherche réels</span><b>Non — les scores sont des estimations</b></div>
+    <p class="muted-note">⚠️ Un modèle de 0,5 milliard de paramètres <b>hallucine</b> s'il doit inventer des hashtags. C'est pourquoi il ne génère pas les tags finaux : il produit des mots-clés, que le logiciel fait correspondre à votre base de tags vérifiés. C'est le mode « RAG » — la seule façon fiable d'utiliser un petit modèle ici.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎙️ Transcription audio (Whisper)</h3>
+    <p class="sub">Pour analyser une vidéo dont vous n'avez pas le texte : un modèle Whisper local transcrit les premières secondes, puis l'IA en extrait les tags.</p>
+    <label for="ai-audio">🎵 Fichier audio ou vidéo</label>
+    <input type="file" id="ai-audio" accept="audio/*,video/*">
+    <button class="btn" onclick="aiTranscribe()">📝 Transcrire puis extraire les tags</button>
+    <p class="muted-note">Modèle Whisper Tiny (~40 Mo) chargé à la demande. La transcription d'une minute d'audio prend quelques secondes en WebGPU, davantage en WASM.</p>
+  </div>
+</section>
+
+<!-- CONSEILS -->
+<section class="panel" id="panel-tips">
+  <div class="card">
+    <h2>💡 Conseils SEO pour devenir viral</h2>
+    <p class="sub">Les stratégies utilisées par les créateurs qui dépassent le million de vues.</p>
+    <div id="tips-list"></div>
+  </div>
+</section>
+
+<!-- MISES À JOUR -->
+<section class="panel" id="panel-update">
+  <div class="card">
+    <h2>🔄 Mises à jour automatiques</h2>
+    <p class="sub">Votre logiciel se met à jour tout seul tous les 15 jours grâce à GitHub Actions.</p>
+    <div class="info-grid" id="update-stats"></div>
+    <div style="margin-top:18px">
+      <div class="step"><div class="n">1</div><p><b>Le 1er et le 16 de chaque mois</b><br>GitHub Actions lance automatiquement <code>scripts/update.mjs</code>.</p></div>
+      <div class="step"><div class="n">2</div><p><b>Le script recalcule la base</b><br>Il incrémente la version, détecte les <b>événements saisonniers</b> actifs (Noël, Halloween, Coupe du monde, rentrée, soldes…) et injecte les tags correspondants.</p></div>
+      <div class="step"><div class="n">3</div><p><b>Le site est republié</b><br>Le commit déclenche le déploiement GitHub Pages : la nouvelle version est en ligne en ~1 minute.</p></div>
+      <div class="step"><div class="n">4</div><p><b>Votre app le détecte</b><br>À l'ouverture, elle compare sa version à <code>data/version.json</code> et affiche le badge <b>« Nouvelle version disponible »</b>.</p></div>
+    </div>
+    <div style="border-top:1px solid var(--border);margin-top:18px;padding-top:18px">
+      <h3>🛠️ Ajouter une mise à jour à la main</h3>
+      <p class="sub">Modifiez <code>data/tags.json</code> (ajouter des tags, changer une tendance, un conseil) puis poussez : la mise à jour se déploie immédiatement. Pour forcer un rafraîchissement saisonnier sans attendre : <b>Actions → TagViral — Mise à jour 15 jours → Run workflow</b>.</p>
+      <button class="btn-ghost" onclick="checkUpdate()">🔍 Vérifier maintenant si une nouvelle version existe</button>
+      <span id="check-result" style="color:var(--muted);font-size:.85rem;margin-left:10px"></span>
+    </div>
+    <div style="border-top:1px solid var(--border);margin-top:18px;padding-top:18px">
+      <h3>📴 Mode hors-ligne</h3>
+      <p class="sub">Le fichier <code>data/tags.js</code> contient la base complète : ouvrez <code>index.html</code> par double-clic, tout fonctionne sans internet. La détection de nouvelle version, elle, nécessite une connexion.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  TagViral Pro <span id="footer-version">—</span><br>
+  Données mises à jour automatiquement tous les 15 jours · Scores = estimations basées sur volume de recherche et concurrence.
+</footer>
+<div id="toast">✅ Copié !</div>
+
+<!-- Base de données : chargée en local (fonctionne aussi en file://) -->
+<script src="data/tags.js"></script>
+<script>
+/* ============================================================
+   BOOTSTRAP : récupération des données
+   ============================================================ */
+let DB = window.TAGVIRAL_DATA || null;
+const IMG_VERSION = 'data/version.json';
+
+/* Repli si data/tags.js est absent (ex. servi autrement) */
+async function loadFallback(){
+  try{
+    const r = await fetch('data/tags.json', {cache:'no-store'});
+    if(r.ok){ DB = await r.json(); return true; }
+  }catch(e){}
+  return false;
+}
+
+const $ = id => document.getElementById(id);
+const scoreClass = s => s >= 88 ? 's-high' : s >= 82 ? 's-mid' : 's-low';
+const scoreColor = s => s >= 88 ? 'var(--green)' : s >= 82 ? 'var(--yellow)' : 'var(--orange)';
+
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+function copyText(txt, msg){
+  const done = ()=>toast(msg||('✅ Copié : '+txt));
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(fallbackCopy);
+  } else fallbackCopy();
+  function fallbackCopy(){
+    const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done();
+  }
+}
+
+/* ---------- Onglets ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    $('panel-'+btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- Header : version + saison ---------- */
+function renderHeader(){
+  const m = DB.meta || {};
+  $('badge-version').textContent = '● VERSION ' + (m.version || 'locale');
+  $('badge-next').textContent = m.nextUpdate ? 'prochaine MAJ : ' + fmtDate(m.nextUpdate) : 'MAJ auto tous les 15 jours';
+  if(DB.seasonal && DB.seasonal.tags && DB.seasonal.tags.length){
+    const b = $('badge-season'); b.style.display='inline-flex';
+    b.textContent = DB.seasonal.label;
+  }
+  $('footer-version').textContent = 'v' + (m.version||'') + ' · ' + (m.stats ? m.stats.tags+' tags' : '');
+  renderUpdate();
+}
+function fmtDate(iso){ try{ return new Date(iso+'T12:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){ return iso; } }
+
+/* ---------- Détection de nouvelle version ---------- */
+async function checkUpdate(silent){
+  try{
+    const r = await fetch(IMG_VERSION, {cache:'no-store'});
+    if(!r.ok) throw 0;
+    const remote = await r.json();
+    const local = (DB.meta && DB.meta.version) || '';
+    const isNew = remote.version !== local;
+    if(!silent){
+      $('check-result').textContent = isNew
+        ? '⬆️ Nouvelle version disponible : ' + remote.version + ' (rechargez la page)'
+        : '✅ Vous êtes à jour (' + local + ')';
+    }
+    if(isNew && local) $('badge-update').classList.add('show');
+    return isNew;
+  }catch(e){
+    if(!silent) $('check-result').textContent = '⚠️ Vérification impossible (hors-ligne ou fichier absent).';
+    return false;
+  }
+}
+
+/* ---------- Génération des tags ---------- */
+function cleanWord(w){
+  return w.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9 ]/g,'').trim();
+}
+function toTag(str){
+  return '#' + cleanWord(str).split(/\s+/).filter(Boolean)
+    .map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join('');
+}
+
+function generateTags(){
+  const topic = $('topic').value.trim();
+  const niche = $('niche').value;
+  const platform = $('platform').value;
+  const lang = $('lang').value;
+  const count = parseInt($('count').value);
+
+  const results = [], seen = new Set();
+  const add = (tag, score, tier, seasonal)=>{
+    if(!tag || tag.length<3) return;
+    const k = tag.toLowerCase();
+    if(seen.has(k)) return;
+    seen.add(k); results.push({tag, score, tier, seasonal:!!seasonal});
+  };
+
+  /* N1 — larges */
+  const broad = platform==='shorts'
+    ? [["#Shorts",98],["#YouTubeShorts",96],["#viral",95],["#trending",93],["#fyp",92],["#viralshorts",94],["#shortsfeed",89],["#trendingnow",90]]
+    : [["#YouTube",92],["#viral",90],["#trending",89],["#fyp",85],["#trendingnow",86],["#explore",84],["#youtuber",82],["#viralvideo",87]];
+  broad.forEach(([t,s])=>add(t,s,1));
+
+  /* N2 — niche de la base */
+  const nicheTags = (DB.categories && DB.categories[niche]) || [];
+  nicheTags.slice(0,8).forEach(([t,s])=>add(t,s,2));
+
+  /* N2bis — saisonnier actif */
+  (DB.seasonal && DB.seasonal.tags || []).forEach(([t,s])=>add(t,s,2,true));
+
+  /* N3 — longue traîne depuis le sujet */
+  if(topic){
+    const words = cleanWord(topic).split(/\s+/).filter(w=>w.length>2);
+    const main = words.slice(0,3).join(' ');
+    const first = words[0]||'';
+    const gen = [
+      [toTag(main+' Shorts'),90],[toTag(main+' 2026'),88],[toTag(main+' Tips'),86],
+      [toTag('Best '+main),84],[toTag(main+' Tutorial'),85],[toTag(first+' Challenge'),83],
+      [toTag(first+' Hacks'),84],[toTag('How To '+main),86],[toTag(main+' Guide'),82],
+      [toTag(first+' 2026'),87],[toTag(main+' Viral'),85],[toTag(first+' Secrets'),83]
+    ];
+    if(lang==='fr' || lang==='mix'){
+      gen.push([toTag(main+' France'),84],[toTag(main+' FR'),82],[toTag('Tutoriel '+main),83],
+               [toTag(main+' Astuces'),84],[toTag('Meilleur '+main),81],[toTag(main+' Facile'),82]);
+    }
+    gen.forEach(([t,s])=>add(t,s,3));
+  }
+
+  /* FR */
+  if(lang==='fr' || lang==='mix'){
+    const fr = (DB.categories && DB.categories["Français 🇫🇷"]) || [];
+    fr.slice(0,5).forEach(([t,s])=>add(t,s,2));
+  }
+
+  results.sort((a,b)=>b.score-a.score);
+  const final = results.slice(0, count);
+
+  const tierNames = {1:'Niveau 1 — Tags larges (portée maximale)',2:'Niveau 2 — Tags de niche (ciblage)',3:'Niveau 3 — Longue traîne (pépites SEO)'};
+  let html = '<h3>🎉 '+final.length+' tags générés pour « '+ (topic||niche) +' »</h3>';
+  html += '<p class="sub">Score = potentiel de viralité estimé. Les tags <span style="color:var(--yellow)">dorés</span> sont saisonniers (événement en cours). Cliquez pour copier.</p>';
+  [1,2,3].forEach(tier=>{
+    const items = final.filter(r=>r.tier===tier);
+    if(!items.length) return;
+    html += '<div class="tier-label"><b>'+tierNames[tier]+'</b></div><div class="tag-grid">';
+    items.forEach(r=>{
+      html += '<span class="tag-chip'+(r.seasonal?' seasonal':'')+'" onclick="copyText(\''+r.tag+'\')">'
+            + r.tag + '<span class="score '+scoreClass(r.score)+'">'+r.score+'</span></span>';
+    });
+    html += '</div>';
+  });
+  const allTags = final.map(r=>r.tag).join(' ');
+  html += '<div class="result-box" id="all-tags-box">'+allTags+'</div>';
+  html += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">'
+        + '<button class="btn-ghost" onclick="copyText(document.getElementById(\'all-tags-box\').textContent,\'✅ Tous les tags copiés !\')">📋 Copier tous les tags</button>'
+        + '<button class="btn-ghost" onclick="downloadTags()">⬇️ Télécharger (.txt)</button>'
+        + '<button class="btn-ghost" onclick="saveToHistory()">💾 Sauvegarder</button></div>';
+
+  $('gen-results').innerHTML = html;
+  localStorage.setItem('tv_last', JSON.stringify({tags: allTags, topic: topic||niche, date: new Date().toLocaleString('fr-FR')}));
+  toast('🚀 Tags générés !');
+}
+
+function downloadTags(){
+  const txt = $('all-tags-box').textContent;
+  const blob = new Blob([txt], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'tags-viraux.txt'; a.click();
+  toast('⬇️ Fichier téléchargé');
+}
+
+/* ---------- Historique ---------- */
+function saveToHistory(){
+  const last = JSON.parse(localStorage.getItem('tv_last')||'null');
+  if(!last) return;
+  const hist = JSON.parse(localStorage.getItem('tv_history')||'[]');
+  hist.unshift(last); localStorage.setItem('tv_history', JSON.stringify(hist.slice(0,10)));
+  renderHistory(); toast('💾 Sauvegardé');
+}
+function renderHistory(){
+  const hist = JSON.parse(localStorage.getItem('tv_history')||'[]');
+  if(!hist.length){ $('history-card').style.display='none'; return; }
+  $('history-card').style.display='block';
+  $('history-list').innerHTML = hist.map(h=>
+    '<div class="history-item"><span>📌 <b>'+h.topic+'</b> <small style="color:var(--muted)">'+h.date+'</small></span>'
+    +'<button class="btn-sm" onclick="copyText(\''+h.tags.replace(/'/g,"\\'")+'\',\'✅ Tags copiés !\')">Copier</button></div>'
+  ).join('');
+}
+function clearHistory(){ localStorage.removeItem('tv_history'); renderHistory(); toast('🗑️ Historique effacé'); }
+
+/* ---------- Tags tendances ---------- */
+let activeCat = 'Tous';
+function buildTrending(){
+  const pills = $('cat-pills'); pills.innerHTML='';
+  const cats = ['Tous', ...Object.keys(DB.categories||{})];
+  if(DB.seasonal && DB.seasonal.tags && DB.seasonal.tags.length) cats.push('🌟 Saisonniers');
+  cats.forEach(cat=>{
+    const b=document.createElement('button');
+    b.className='cat-pill'+(cat==='Tous'?' active':'');
+    b.textContent=cat;
+    b.onclick=()=>{ activeCat=cat; document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active')); b.classList.add('active'); renderTagList(); };
+    pills.appendChild(b);
+  });
+  const st = DB.meta && DB.meta.stats;
+  $('trending-sub').textContent = st
+    ? st.tags + ' tags dans ' + st.categories + ' niches + ' + st.seasonalTags + ' tags saisonniers actifs. Cliquez sur un tag pour le copier.'
+    : 'Cliquez sur un tag pour le copier.';
+}
+function renderTagList(){
+  const q = $('tag-search').value.toLowerCase();
+  const sort = $('sort-mode').value;
+  let all = [];
+  const push = (cat, tags) => tags.forEach(([t,s])=>{ if(t.toLowerCase().includes(q)) all.push({t,s,cat}); });
+
+  if(activeCat==='🌟 Saisonniers'){
+    push('🌟 ' + (DB.seasonal.label||'Saisonniers'), DB.seasonal.tags||[]);
+  } else {
+    Object.entries(DB.categories||{}).forEach(([cat,tags])=>{
+      if(activeCat!=='Tous' && cat!==activeCat) return;
+      push(cat, tags);
+    });
+    if(activeCat==='Tous' && DB.seasonal && DB.seasonal.tags) push('🌟 Saisonniers', DB.seasonal.tags);
+  }
+
+  if(sort==='score') all.sort((a,b)=>b.s-a.s); else all.sort((a,b)=>a.t.localeCompare(b.t));
+  $('tag-list').innerHTML = all.length ? all.map(r=>
+    '<div class="tag-card" onclick="copyText(\''+r.t+'\')">'
+    +'<div><div class="t">'+r.t+'</div><div class="meta">'+r.cat+'</div>'
+    +'<div class="scorebar" style="width:150px"><div style="width:'+r.s+'%;background:'+scoreColor(r.s)+'"></div></div></div>'
+    +'<span class="score '+scoreClass(r.s)+'" style="font-size:.85rem;padding:4px 10px;border-radius:12px">'+r.s+'</span></div>'
+  ).join('') : '<div class="empty-state">Aucun tag trouvé pour cette recherche.</div>';
+}
+
+/* ---------- Tendances du moment ---------- */
+function buildTrends(){
+  $('trend-grid').innerHTML = (DB.trends||[]).map(t=>
+    '<div class="trend-card"><div class="emoji">'+t.e+'</div><h4>'+t.t+'</h4><p>'+t.d+'</p><span class="hot">'+t.h+'</span></div>'
+  ).join('');
+  $('trends-sub').textContent = 'Formats qui performent actuellement sur YouTube Shorts — base du ' + fmtDate(DB.meta.lastUpdate) + '.';
+}
+
+/* ---------- Titres ---------- */
+function buildFormulas(){
+  $('formula-list').innerHTML = (DB.formulas||[]).map(f=>
+    '<div class="formula" onclick="copyText(\''+String(f[0]).replace(/'/g,"\\'")+'\',\'✅ Formule copiée !\')"><b>'+f[0]+'</b><small>'+f[1]+'</small></div>'
+  ).join('');
+}
+function analyzeTitle(){
+  const title = $('title-input').value.trim();
+  if(!title){ toast('⚠️ Entrez un titre à analyser'); return; }
+  let score = 40; const fb = [];
+  const len = title.length;
+  if(len>=30 && len<=70){ score+=20; fb.push(['✅','Longueur idéale (30-70 caractères) — parfait pour le SEO et l\'affichage mobile.']); }
+  else if(len<30){ score+=8; fb.push(['⚠️','Titre un peu court : ajoutez un bénéfice ou un chiffre pour plus d\'impact.']); }
+  else { score+=5; fb.push(['⚠️','Titre long : risque d\'être tronqué sur mobile. Visez 50 caractères max.']); }
+  if(/\d/.test(title)){ score+=15; fb.push(['✅','Un chiffre est présent : les titres chiffrés ont un meilleur taux de clic.']); }
+  else fb.push(['💡','Ajoutez un chiffre (5, 3, 30 jours...) pour augmenter le clic.']);
+  if(/[!?]/.test(title) || /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(title)){ score+=10; fb.push(['✅','Ponctuation/emoji dynamique détecté : attire l\'œil dans le feed.']); }
+  else fb.push(['💡','Un point d\'exclamation ou un emoji peut booster l\'attractivité.']);
+  if(/(comment|pourquoi|secret|erreur|personne|jamais|toujours|arrête|stop)/i.test(title)){ score+=15; fb.push(['✅','Mot de curiosité détecté (secret, erreur, pourquoi...) : excellent pour le clic.']); }
+  else fb.push(['💡','Utilisez un mot de curiosité : "secret", "erreur", "personne ne t\'a dit"...']);
+  if(/(2026|ultime|guide|complet|débutant)/i.test(title)){ score+=10; fb.push(['✅','Mot SEO fort détecté (2026, guide, ultime...) : bon pour la recherche.']); }
+  score = Math.min(score,100);
+  const verdict = score>=85?'🔥 Excellent titre viral !':score>=65?'👍 Bon titre, quelques ajustements possibles':'⚠️ Titre à améliorer';
+  $('title-result').innerHTML =
+    '<div style="margin-top:18px"><h3>'+verdict+' — Score : '+score+'/100</h3>'
+    +'<div class="scorebar" style="margin:10px 0 16px"><div style="width:'+score+'%;background:'+scoreColor(score)+'"></div></div>'
+    + fb.map(f=>'<p style="color:var(--muted);font-size:.9rem;margin-bottom:6px">'+f[0]+' '+f[1]+'</p>').join('')+'</div>';
+}
+
+/* ---------- Conseils ---------- */
+function buildTips(){
+  $('tips-list').innerHTML = (DB.tips||[]).map((t,i)=>
+    '<div class="tip"><div class="num">'+(i+1)+'</div><div><p><b>'+t[0]+'</b><br>'+t[1]+'</p></div></div>'
+  ).join('');
+}
+
+/* ---------- Onglet MAJ ---------- */
+function renderUpdate(){
+  const m = DB.meta||{}, s = m.stats||{};
+  $('update-stats').innerHTML = [
+    ['Version', m.version||'—'],
+    ['Dernière MAJ', m.lastUpdate?fmtDate(m.lastUpdate):'—'],
+    ['Prochaine MAJ', m.nextUpdate?fmtDate(m.nextUpdate):'—'],
+    ['Tags en base', s.tags||0],
+    ['Saisonniers actifs', s.seasonalTags||0],
+    ['Tendances', s.trends||0]
+  ].map(([l,v])=>'<div class="info-tile"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>').join('');
+}
+
+/* ============================================================
+   IA LOCALE — Qwen2.5 (transformers.js / WebGPU)
+   ============================================================ */
+const TRANSFORMERS_CDN = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.2';
+
+/* Bouton "télécharger le paquet" : utile pour la détection de MAJ et pour
+   servir la librairie depuis le même dépôt (aucun CDN externe).
+   Fichiers déposés dans ia/ par scripts/fetch-ia.mjs */
+const LOCAL_TRANSFORMERS = 'ia/transformers.min.js';
+
+let aiGen = null;          // pipeline text-generation
+let aiAsr = null;          // pipeline automatic-speech-recognition
+let aiCaptioner = null;    // pipeline image-to-text
+let aiLoading = false;
+
+/* --- chargement dynamique de la librairie (uniquement si besoin) --- */
+async function loadTransformers(){
+  if(window.__hf) return window.__hf;
+  let mod;
+  try{
+    /* 1) version locale (hors-ligne, même origine) */
+    mod = await import(LOCAL_TRANSFORMERS);
+  }catch(e){
+    /* 2) repli CDN */
+    mod = await import(TRANSFORMERS_CDN);
+  }
+  mod.env.allowLocalModels = false;
+  mod.env.useBrowserCache = true;
+  window.__hf = mod;
+  return mod;
+}
+
+function aiUI(state, text, pct){
+  const dot = $('ai-dot');
+  dot.className = 'dot ' + state;
+  $('ai-status-text').textContent = text;
+  const prog = $('ai-prog');
+  if(typeof pct === 'number'){
+    prog.classList.add('show');
+    $('ai-prog-bar').style.width = Math.max(0, Math.min(100, pct)) + '%';
+    if(pct >= 100) setTimeout(()=>prog.classList.remove('show'), 1200);
+  }
+}
+
+async function aiLoad(){
+  if(aiLoading) return;
+  if(aiGen){ toast('✅ L\'IA est déjà chargée'); return; }
+  aiLoading = true;
+  aiUI('load','Connexion à Hugging Face…', 2);
+  try{
+    const { pipeline } = await loadTransformers();
+    const [modelId, dtype] = $('ai-model').value.split('|');
+
+    /* détection du moteur */
+    let device = $('ai-device').value;
+    let gpuOk = false;
+    if(device !== 'wasm' && 'gpu' in navigator){
+      try{
+        const adapter = await navigator.gpu.requestAdapter();
+        if(adapter){ device = 'webgpu'; gpuOk = true; }
+      }catch(e){}
+    }
+    if(device === 'webgpu' && !gpuOk) device = 'wasm';
+    if(device === 'auto') device = gpuOk ? 'webgpu' : 'wasm';
+
+    aiUI('load', 'Chargement de ' + modelId.split('/')[1] + ' (' + device.toUpperCase() + ')…', 5);
+
+    aiGen = await pipeline('text-generation', modelId, {
+      device,
+      dtype: device === 'wasm' ? (dtype === 'q4f16' ? 'q4' : dtype) : dtype,
+      progress_callback: (p) => {
+        if(p.status === 'progress' && p.total){
+          const pct = Math.round((p.loaded / p.total) * 100);
+          aiUI('load', 'Téléchargement : ' + (p.file||'') + ' — ' + pct + '%', pct);
+        } else if(p.status === 'ready'){
+          aiUI('load','Modèle prêt !', 100);
+        }
+      }
+    });
+
+    aiUI('ok', '✅ IA prête — ' + modelId.split('/')[1] + ' · ' + device.toUpperCase(), 100);
+    toast('🧠 IA chargée !');
+  }catch(err){
+    console.error(err);
+    const detail = String(err && err.message || err);
+    const cspBlocked = /Content Security Policy|unsafe-eval|violates the following Content Security policy/i.test(detail);
+    if(cspBlocked){
+      aiUI('err', '❌ Le navigateur bloque WebAssembly (CSP de l’aperçu). Ouvrez le site directement dans un onglet — pas dans l’aperçu intégré — ou utilisez la version publiée sur GitHub Pages.');
+      toast('⚠️ Politique de sécurité du lecteur : exécution IA bloquée');
+    } else {
+      aiUI('err', '❌ Échec du chargement : ' + detail);
+      toast('❌ Impossible de charger le modèle');
+    }
+  }finally{
+    aiLoading = false;
+  }
+}
+
+/* --- prompt d'extraction --- */
+function buildPrompt(title, desc, niche, lang){
+  const nb = (DB.categories && DB.categories[niche] || []).slice(0,6).map(t=>t[0].replace('#','')).join(', ');
+  return [
+    { role:'system', content: lang==='fr'
+      ? "Tu es un expert SEO YouTube. Tu réponds UNIQUEMENT en JSON valide, sans texte autour, sans balises markdown."
+      : "You are a YouTube SEO expert. Answer ONLY with valid JSON, no surrounding text, no markdown." },
+    { role:'user', content: (lang==='fr'
+      ? `Analyse cette vidéo et donne les mots-clés qui la décrivent.\n\nTitre : ${title}\nDescription : ${desc || '(aucune)'}\nNiche : ${niche}\n${nb ? 'Tags typiques de la niche : '+nb+'\n' : ''}\nRéponds au format JSON exact :\n{"sujet":"3-6 mots","motscles":["8 à 12 mots-clés courts"],"public":"audience cible","angle":"angle du contenu","hashtags":["5 hashtags sans le symbole #"]}`
+      : `Analyze this video and give keywords describing it.\n\nTitle: ${title}\nDescription: ${desc || '(none)'}\nNiche: ${niche}\n${nb ? 'Typical niche tags: '+nb+'\n' : ''}\nReply with exactly this JSON: {"sujet":"3-6 words","motscles":["8-12 short keywords"],"public":"target audience","angle":"content angle","hashtags":["5 hashtags without #"]}`) }
+  ];
+}
+
+function extractJSON(text){
+  if(!text) return null;
+  let t = text.replace(/```json/gi,'').replace(/```/g,'').trim();
+  const a = t.indexOf('{'), b = t.lastIndexOf('}');
+  if(a === -1 || b === -1 || b < a) return null;
+  try{ return JSON.parse(t.slice(a, b+1)); }catch(e){
+    /* réparation simple : guillemets manquants sur les clés */
+    try{ return JSON.parse(t.slice(a,b+1).replace(/(\w+)\s*:/g,'"$1":').replace(/""/g,'"')); }catch(e2){ return null; }
+  }
+}
+
+/* --- fuzzy matching mots-clés → base de tags --- */
+function norm(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9 ]/g,'');
+}
+function bigrams(str){
+  const s = norm(str).replace(/ /g,'');
+  const out = new Set();
+  for(let i=0;i<s.length-1;i++) out.add(s.slice(i,i+2));
+  return out;
+}
+function similarity(a, b){
+  const A = bigrams(a), B = bigrams(b);
+  if(!A.size || !B.size) return 0;
+  let inter = 0;
+  A.forEach(g=>{ if(B.has(g)) inter++; });
+  return (2*inter) / (A.size + B.size);
+}
+function mapKeywordsToTags(keywords){
+  const flat = [];
+  Object.entries(DB.categories||{}).forEach(([cat,tags])=>tags.forEach(([t,s])=>flat.push({t,s,cat,
+    plain: t.replace('#','').replace(/([a-z])([A-Z])/g,'$1 $2').toLowerCase()})));
+  (DB.seasonal && DB.seasonal.tags || []).forEach(([t,s])=>flat.push({t,s,cat:'🌟 Saisonnier',
+    plain: t.replace('#','').replace(/([a-z])([A-Z])/g,'$1 $2').toLowerCase()}));
+
+  const used = new Set(), out = [];
+  keywords.forEach(kw=>{
+    const scored = flat.map(f=>({...f, sim: similarity(kw, f.plain)}))
+                        .filter(f=>f.sim >= 0.45)
+                        .sort((a,b)=>b.sim-a.sim);
+    scored.slice(0,2).forEach(f=>{
+      const key = f.t.toLowerCase();
+      if(used.has(key)) return;
+      used.add(key);
+      out.push({tag:f.t, score: Math.round(f.s*0.85 + f.sim*15), cat:f.cat, kw, sim:Math.round(f.sim*100)});
+    });
+  });
+  return out.sort((a,b)=>b.score-a.score);
+}
+
+/* --- analyse texte --- */
+async function aiAnalyze(){
+  const title = $('ai-title').value.trim();
+  let desc    = $('ai-desc').value.trim();
+  const niche = $('ai-niche').value || Object.keys(DB.categories||{})[0];
+  const lang  = $('ai-lang').value;
+
+  if(!aiGen){
+    toast('⬇️ Chargez d\'abord l\'IA');
+    document.querySelector('.tab-btn[data-tab="ai"]').click();
+    window.scrollTo({top:120,behavior:'smooth'});
+    return;
+  }
+  if(!title && !desc){ toast('⚠️ Entrez au moins un titre ou une description'); return; }
+
+  $('ai-result-card').style.display = 'block';
+  $('ai-tags-zone').innerHTML = '';
+  $('ai-result-card').scrollIntoView({behavior:'smooth', block:'start'});
+
+  /* si un fichier vidéo est fourni : décrire quelques images clés */
+  if($('ai-video').files[0]){
+    $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot load"></span><span>Analyse des images de la vidéo (BLIP)…</span></div>';
+    const vision = await aiDescribeVideo();
+    if(vision){
+      desc = (desc + ' Contenu visuel : ' + vision).trim();
+      $('ai-desc').value = desc;
+    }
+  }
+
+  $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot load"></span><span>Extraction des mots-clés par Qwen…</span></div>';
+  $('ai-raw').textContent = '';
+
+  const messages = buildPrompt(title, desc, niche, lang);
+  let raw = '';
+  try{
+    const out = await aiGen(messages, {
+      max_new_tokens: 260,
+      do_sample: false,
+      temperature: 0.3,
+      repetition_penalty: 1.1
+    });
+    raw = out[0].generated_text;
+    if(Array.isArray(raw)){
+      /* pipeline "chat" : le dernier message est la réponse */
+      raw = raw[raw.length-1].content;
+    } else if(typeof raw === 'string'){
+      /* pipeline "text-generation" : la chaîne contient le prompt, on isole la réponse */
+      const cut = raw.lastIndexOf('<|im_start|>assistant');
+      if(cut !== -1) raw = raw.slice(cut + '<|im_start|>assistant'.length);
+      raw = raw.replace(/<\|im_end\|>[\s\S]*$/, '').trim();
+    }
+    $('ai-raw').textContent = raw;
+  }catch(err){
+    console.error(err);
+    $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot err"></span><span>Erreur pendant la génération : '+(err.message||err)+'</span></div>';
+    return;
+  }
+
+  const parsed = extractJSON(raw);
+  if(!parsed || !parsed.motscles){
+    $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot err"></span><span>Le modèle n\'a pas renvoyé un JSON exploitable. Simplifiez la description ou passez au modèle 1.5B.</span></div>';
+    return;
+  }
+
+  /* mots-clés */
+  const kws = (parsed.motscles||[]).filter(Boolean);
+  $('ai-kw-zone').innerHTML =
+    '<div class="kv"><span>Sujet détecté</span><b>'+(parsed.sujet||'—')+'</b></div>'
+    + '<div class="kv"><span>Public cible</span><b>'+(parsed.public||'—')+'</b></div>'
+    + '<div class="kv"><span>Angle</span><b>'+(parsed.angle||'—')+'</b></div>'
+    + '<div style="margin-top:12px">' + kws.map(k=>'<span class="kw">'+k+'</span>').join('') + '</div>';
+
+  /* mapping vers la base */
+  const mapped = mapKeywordsToTags(kws.concat(parsed.hashtags||[]));
+
+  /* tags générés par le LLM (gardés séparément, non vérifiés) */
+  const llmTags = (parsed.hashtags||[]).map(h=>'#'+String(h).replace(/[^a-zA-Z0-9À-ÿ]/g,''));
+
+  let html = '<h3 style="margin-bottom:4px">🏷️ Tags issus de votre base vérifiée</h3>'
+    + '<p class="sub" style="margin-bottom:8px">Mots-clés IA mappés sur les 204 tags notés du logiciel — scores fiables.</p>';
+  html += mapped.length
+    ? '<div class="tag-grid">' + mapped.map(m=>
+        '<span class="tag-chip" onclick="copyText(\''+m.tag+'\')" title="mot-clé : '+m.kw+'">'
+        + m.tag + '<span class="score '+scoreClass(m.score)+'">'+m.score+'</span></span>').join('') + '</div>'
+    : '<p class="muted-note">Aucun tag de la base ne correspond. Aiguisez le titre/description ou choisissez une autre niche.</p>';
+
+  if(llmTags.length){
+    html += '<h3 style="margin:20px 0 4px">✨ Hashtags proposés par l\'IA <span style="color:var(--muted);font-weight:400;font-size:.8rem">(non vérifiés)</span></h3>'
+      + '<p class="sub" style="margin-bottom:8px">Créés par le modèle : vérifiez qu\'ils existent et qu\'ils ont du volume avant de les utiliser.</p>'
+      + '<div class="tag-grid">' + llmTags.map(t=>
+          '<span class="tag-chip seasonal" onclick="copyText(\''+t+'\')">'+t+'</span>').join('') + '</div>';
+  }
+
+  const combo = mapped.slice(0,6).map(m=>m.tag).join(' ');
+  html += '<div class="result-box" id="ai-combo">'+combo+'</div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">'
+    + '<button class="btn-ghost" onclick="copyText(document.getElementById(\'ai-combo\').textContent,\'✅ Combo copié !\')">📋 Copier le combo</button>'
+    + '<button class="btn-ghost" onclick="aiSendToGenerator()">⚡ Envoyer au générateur</button>'
+    + '<button class="btn-ghost" onclick="downloadTagsFrom(\'ai-combo\')">⬇️ .txt</button></div>';
+
+  $('ai-tags-zone').innerHTML = html;
+  window.__aiResult = { mapped, llmTags, combo, parsed };
+  toast('🧠 Analyse terminée !');
+}
+
+function downloadTagsFrom(id){
+  const txt = $(id).textContent;
+  const blob = new Blob([txt], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'tags-ia.txt'; a.click();
+  toast('⬇️ Fichier téléchargé');
+}
+
+function aiSendToGenerator(){
+  if(!window.__aiResult) return;
+  const t = $('ai-title').value.trim() || (window.__aiResult.parsed && window.__aiResult.parsed.sujet) || '';
+  $('topic').value = t;
+  if($('ai-niche').value) $('niche').value = $('ai-niche').value;
+  document.querySelector('.tab-btn[data-tab="generator"]').click();
+  toast('⚡ Sujet transféré — lancez la génération');
+}
+
+/* --- image-to-text sur frames vidéo --- */
+function aiVideoChosen(){
+  const f = $('ai-video').files[0];
+  if(f) $('ai-video-note').textContent = '✅ ' + f.name + ' (' + (f.size/1048576).toFixed(1) + ' Mo) — des images clés seront extraites puis décrites par BLIP.';
+}
+
+async function captureFrames(file, count){
+  const url = URL.createObjectURL(file);
+  const video = document.createElement('video');
+  video.src = url; video.muted = true; video.preload = 'auto';
+  await new Promise((res, rej)=>{
+    video.onloadedmetadata = res; video.onerror = rej;
+    setTimeout(res, 8000);
+  });
+  const dur = Math.min(video.duration || 10, 120);
+  const frames = [];
+  const canvas = document.createElement('canvas');
+  for(let i=0;i<count;i++){
+    const t = (dur * (i+0.5)) / count;
+    await new Promise(res=>{
+      const done = ()=>{ video.removeEventListener('seeked', done); res(); };
+      video.addEventListener('seeked', done);
+      video.currentTime = Math.min(t, dur - 0.05);
+      setTimeout(res, 3000);
+    });
+    canvas.width = 384; canvas.height = 384 * (video.videoHeight/video.videoWidth || 1);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    frames.push(canvas.toDataURL('image/jpeg', 0.75));
+  }
+  URL.revokeObjectURL(url);
+  return frames;
+}
+
+async function aiDescribeVideo(){
+  const f = $('ai-video').files[0];
+  if(!f) return null;
+  try{
+    const { pipeline, RawImage } = await loadTransformers();
+    if(!aiCaptioner){
+      aiCaptioner = await pipeline('image-to-text', 'Xenova/vit-gpt2-image-captioning',
+        { quantized: true });
+    }
+    const frames = await captureFrames(f, 3);
+    const descs = [];
+    for(const f64 of frames){
+      const img = await RawImage.fromURL(f64);
+      const out = await aiCaptioner(img, { max_new_tokens: 40 });
+      if(out && out[0] && out[0].generated_text) descs.push(out[0].generated_text.trim());
+    }
+    return descs.filter(Boolean).join('. ');
+  }catch(e){
+    console.warn('vision KO', e);
+    return null;
+  }
+}
+
+/* --- Whisper : transcription puis tags --- */
+async function aiTranscribe(){
+  const f = $('ai-audio').files[0];
+  if(!f){ toast('⚠️ Choisissez un fichier audio ou vidéo'); return; }
+  if(!aiGen){ toast('⬇️ Chargez d\'abord l\'IA (bloc du haut)'); return; }
+
+  $('ai-result-card').style.display = 'block';
+  $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot load"></span><span>Chargement de Whisper Tiny…</span></div>';
+  $('ai-raw').textContent=''; $('ai-tags-zone').innerHTML='';
+  try{
+    const { pipeline } = await loadTransformers();
+    if(!aiAsr){
+      aiAsr = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny',
+        { quantized: true });
+    }
+    /* lecture limitée à 60 s pour rester raisonnable en navigateur */
+    const buf = await f.arrayBuffer();
+    const audio = await decodeAudio(buf, 60);
+    $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot load"></span><span>Transcription en cours…</span></div>';
+    const res = await aiAsr(audio, { language: $('ai-lang').value, task:'transcribe', chunk_length_s: 30 });
+    const text = (res && res.text) || '';
+    if(!text){ toast('⚠️ Aucune parole détectée'); return; }
+    $('ai-raw').textContent = '🎙️ Transcription :\n' + text;
+    $('ai-desc').value = ($('ai-desc').value + '\n' + text).trim();
+    if(!$('ai-title').value) $('ai-title').value = text.slice(0, 70);
+    await aiAnalyze();
+  }catch(err){
+    console.error(err);
+    $('ai-kw-zone').innerHTML = '<div class="ai-status"><span class="dot err"></span><span>Transcription impossible : '+(err.message||err)+'</span></div>';
+  }
+}
+
+async function decodeAudio(buffer, maxSeconds){
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const ctx = new AC({ sampleRate: 16000 });
+  const decoded = await ctx.decodeAudioData(buffer);
+  const len = Math.min(decoded.length, 16000 * maxSeconds);
+  const mono = new Float32Array(len);
+  for(let c=0;c<decoded.numberOfChannels;c++){
+    const data = decoded.getChannelData(c);
+    for(let i=0;i<len;i++) mono[i] += data[i] / decoded.numberOfChannels;
+  }
+  return mono;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+async function init(){
+  if(!DB){
+    const ok = await loadFallback();
+    if(!ok){
+      $('gen-results').innerHTML = '<div class="empty-state"><div class="big">⚠️</div>Base introuvable.<br>Vérifiez que le dossier <b>data/</b> est bien à côté de index.html.</div>';
+      $('badge-version').textContent = '● BASE MANQUANTE';
+      return;
+    }
+  }
+  /* remplir le select des niches */
+  Object.keys(DB.categories||{}).forEach(n=>{
+    const o=document.createElement('option'); o.value=n; o.textContent=n; $('niche').appendChild(o);
+    const aiOpt=document.createElement('option'); aiOpt.value=n; aiOpt.textContent=n; $('ai-niche').appendChild(aiOpt);
+  });
+  renderHeader();
+  buildTrending(); renderTagList();
+  buildTrends(); buildFormulas(); buildTips();
+  renderHistory();
+  checkUpdate(true);           /* silencieux au démarrage */
+  setInterval(()=>checkUpdate(true), 6*3600*1000);  /* revérifie toutes les 6h */
+}
+init();
+</script>
+</body>
+</html>

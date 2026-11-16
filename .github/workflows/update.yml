@@ -1,0 +1,52 @@
+name: TagViral — Mise à jour 15 jours
+
+# Déclencheurs :
+#   • le 1er et le 16 de chaque mois à 06:00 UTC (≈ tous les 15 jours)
+#   • manuellement depuis l'onglet "Actions" (bouton Run workflow)
+on:
+  schedule:
+    - cron: '0 6 1,16 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tagviral-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Régénérer la base (version + saisonniers + stats)
+        run: node scripts/update.mjs
+
+      - name: Publier les changements
+        run: |
+          git config user.name  "TagViral Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/tags.json data/tags.js data/version.json
+          if git diff --staged --quiet; then
+            echo "Aucune modification à publier."
+          else
+            VERSION=$(node -p "require('./data/version.json').version")
+            git commit -m "chore(auto): mise à jour TagViral $VERSION"
+            git push
+          fi
+
+      - name: Déployer sur GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+          exclude_assets: '.github,scripts,node_modules,*.md'
