@@ -1,0 +1,15 @@
+{
+  "version": "2026.11.16-c2",
+  "lastUpdate": "2026-11-16",
+  "nextUpdate": "2026-12-01",
+  "cycle": 2,
+  "stats": {
+    "categories": 15,
+    "tags": 204,
+    "seasonalTags": 0,
+    "trends": 12,
+    "formulas": 15,
+    "tips": 10
+  },
+  "seasonal": "Aucun événement saisonnier en cours"
+}

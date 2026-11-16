@@ -1,0 +1,1050 @@
+{
+  "meta": {
+    "version": "2026.11.16-c2",
+    "lastUpdate": "2026-11-16",
+    "cycle": 2,
+    "autoSeasonal": true,
+    "githubRun": "1",
+    "nextUpdate": "2026-12-01",
+    "stats": {
+      "categories": 15,
+      "tags": 204,
+      "seasonalTags": 0,
+      "trends": 12,
+      "formulas": 15,
+      "tips": 10
+    }
+  },
+  "categories": {
+    "Général / Viral": [
+      [
+        "#Shorts",
+        98
+      ],
+      [
+        "#YouTubeShorts",
+        96
+      ],
+      [
+        "#viral",
+        95
+      ],
+      [
+        "#trending",
+        93
+      ],
+      [
+        "#fyp",
+        92
+      ],
+      [
+        "#foryou",
+        91
+      ],
+      [
+        "#viralshorts",
+        94
+      ],
+      [
+        "#trendingnow",
+        90
+      ],
+      [
+        "#explore",
+        88
+      ],
+      [
+        "#shortsfeed",
+        89
+      ],
+      [
+        "#shortsvideo",
+        90
+      ],
+      [
+        "#viralvideo",
+        87
+      ],
+      [
+        "#blowthisup",
+        84
+      ],
+      [
+        "#mustwatch",
+        82
+      ],
+      [
+        "#shorts2026",
+        88
+      ],
+      [
+        "#trending2026",
+        86
+      ],
+      [
+        "#viral2026",
+        87
+      ],
+      [
+        "#youtubeshorts",
+        95
+      ],
+      [
+        "#shortvideo",
+        85
+      ],
+      [
+        "#explorepage",
+        83
+      ]
+    ],
+    "Gaming": [
+      [
+        "#GamingShorts",
+        92
+      ],
+      [
+        "#gaming",
+        90
+      ],
+      [
+        "#gamingclips",
+        89
+      ],
+      [
+        "#gameplay",
+        87
+      ],
+      [
+        "#shortsfortnite",
+        88
+      ],
+      [
+        "#shortsroblox",
+        87
+      ],
+      [
+        "#shortsGTA5",
+        85
+      ],
+      [
+        "#FPSGaming",
+        82
+      ],
+      [
+        "#MobileGaming",
+        84
+      ],
+      [
+        "#GamingCommunity",
+        80
+      ],
+      [
+        "#YouTubeGaming",
+        81
+      ],
+      [
+        "#GameStream",
+        78
+      ],
+      [
+        "#TrendingGames",
+        83
+      ],
+      [
+        "#gamingmemes",
+        86
+      ],
+      [
+        "#pcgaming",
+        79
+      ],
+      [
+        "#gamer",
+        84
+      ],
+      [
+        "#GameplayHighlights",
+        85
+      ],
+      [
+        "#shortsgaming",
+        88
+      ]
+    ],
+    "Humour & Divertissement": [
+      [
+        "#FunnyShorts",
+        93
+      ],
+      [
+        "#shortscomedy",
+        91
+      ],
+      [
+        "#funny",
+        90
+      ],
+      [
+        "#comedy",
+        88
+      ],
+      [
+        "#relatable",
+        92
+      ],
+      [
+        "#memes",
+        89
+      ],
+      [
+        "#shortsfunny",
+        90
+      ],
+      [
+        "#humor",
+        86
+      ],
+      [
+        "#lol",
+        84
+      ],
+      [
+        "#ShortsJokes",
+        85
+      ],
+      [
+        "#ReactionShorts",
+        87
+      ],
+      [
+        "#ViralMeme",
+        88
+      ],
+      [
+        "#DailyHumor",
+        82
+      ],
+      [
+        "#LaughOutLoud",
+        83
+      ],
+      [
+        "#skit",
+        81
+      ],
+      [
+        "#fails",
+        86
+      ],
+      [
+        "#prank",
+        85
+      ],
+      [
+        "#shortsprank",
+        84
+      ]
+    ],
+    "Musique": [
+      [
+        "#MusicShorts",
+        91
+      ],
+      [
+        "#music",
+        88
+      ],
+      [
+        "#shortsmusic",
+        89
+      ],
+      [
+        "#CoverArtist",
+        84
+      ],
+      [
+        "#SingingChallenge",
+        85
+      ],
+      [
+        "#MusicLovers",
+        82
+      ],
+      [
+        "#OriginalSong",
+        80
+      ],
+      [
+        "#DJShorts",
+        83
+      ],
+      [
+        "#TrendingBeats",
+        86
+      ],
+      [
+        "#MusicianLife",
+        79
+      ],
+      [
+        "#song",
+        84
+      ],
+      [
+        "#musician",
+        81
+      ],
+      [
+        "#shortsbts",
+        82
+      ],
+      [
+        "#shortsblackpink",
+        80
+      ]
+    ],
+    "Fitness & Santé": [
+      [
+        "#FitnessShorts",
+        92
+      ],
+      [
+        "#workout",
+        89
+      ],
+      [
+        "#Fitness",
+        88
+      ],
+      [
+        "#HomeWorkout",
+        87
+      ],
+      [
+        "#GymLife",
+        85
+      ],
+      [
+        "#FitnessTips",
+        86
+      ],
+      [
+        "#WorkoutMotivation",
+        88
+      ],
+      [
+        "#HealthyLifestyle",
+        83
+      ],
+      [
+        "#WorkoutChallenge",
+        84
+      ],
+      [
+        "#YogaShorts",
+        82
+      ],
+      [
+        "#MotivationShorts",
+        85
+      ],
+      [
+        "#HealthTips",
+        84
+      ],
+      [
+        "#shortsfitness",
+        87
+      ],
+      [
+        "#NoPainNoGain",
+        80
+      ],
+      [
+        "#FitTok",
+        81
+      ]
+    ],
+    "Cuisine & Food": [
+      [
+        "#FoodShorts",
+        92
+      ],
+      [
+        "#food",
+        89
+      ],
+      [
+        "#recipe",
+        90
+      ],
+      [
+        "#cooking",
+        88
+      ],
+      [
+        "#Foodie",
+        86
+      ],
+      [
+        "#EasyMeals",
+        87
+      ],
+      [
+        "#shortscooking",
+        88
+      ],
+      [
+        "#FoodTok",
+        85
+      ],
+      [
+        "#RecipeShorts",
+        89
+      ],
+      [
+        "#ChefLife",
+        82
+      ],
+      [
+        "#BakingShorts",
+        84
+      ],
+      [
+        "#QuickRecipes",
+        86
+      ],
+      [
+        "#FoodPorn",
+        83
+      ],
+      [
+        "#HomemadeFood",
+        81
+      ]
+    ],
+    "Voyage & Lifestyle": [
+      [
+        "#TravelShorts",
+        91
+      ],
+      [
+        "#TravelVlog",
+        88
+      ],
+      [
+        "#Wanderlust",
+        86
+      ],
+      [
+        "#Vlogger",
+        84
+      ],
+      [
+        "#DailyVlog",
+        85
+      ],
+      [
+        "#BudgetTravel",
+        83
+      ],
+      [
+        "#HiddenPlaces",
+        82
+      ],
+      [
+        "#AdventureTime",
+        81
+      ],
+      [
+        "#TravelHack",
+        84
+      ],
+      [
+        "#NatureShorts",
+        80
+      ],
+      [
+        "#VloggerLife",
+        82
+      ],
+      [
+        "#LifestyleShorts",
+        85
+      ],
+      [
+        "#MorningRoutine",
+        86
+      ],
+      [
+        "#DayInTheLife",
+        84
+      ]
+    ],
+    "Tech & IA": [
+      [
+        "#TechShorts",
+        91
+      ],
+      [
+        "#tech",
+        87
+      ],
+      [
+        "#shortstech",
+        88
+      ],
+      [
+        "#AITech",
+        89
+      ],
+      [
+        "#AITools",
+        90
+      ],
+      [
+        "#TechTips",
+        86
+      ],
+      [
+        "#Gadgets",
+        84
+      ],
+      [
+        "#InnovateWithMe",
+        82
+      ],
+      [
+        "#DigitalTrends",
+        83
+      ],
+      [
+        "#shortsnews",
+        81
+      ],
+      [
+        "#TechReview",
+        85
+      ],
+      [
+        "#FutureTech",
+        84
+      ],
+      [
+        "#ChatGPT",
+        87
+      ],
+      [
+        "#AIShorts",
+        88
+      ]
+    ],
+    "Beauté & Mode": [
+      [
+        "#BeautyShorts",
+        91
+      ],
+      [
+        "#beauty",
+        88
+      ],
+      [
+        "#makeup",
+        89
+      ],
+      [
+        "#GRWM",
+        87
+      ],
+      [
+        "#BeautyTips",
+        86
+      ],
+      [
+        "#SkincareShorts",
+        88
+      ],
+      [
+        "#MakeupTutorial",
+        85
+      ],
+      [
+        "#FashionShorts",
+        84
+      ],
+      [
+        "#OOTD",
+        82
+      ],
+      [
+        "#GlowUp",
+        83
+      ],
+      [
+        "#HairTutorial",
+        81
+      ]
+    ],
+    "Animaux": [
+      [
+        "#PetsShorts",
+        93
+      ],
+      [
+        "#pets",
+        90
+      ],
+      [
+        "#cute",
+        89
+      ],
+      [
+        "#dog",
+        88
+      ],
+      [
+        "#cat",
+        89
+      ],
+      [
+        "#PetTok",
+        87
+      ],
+      [
+        "#FunnyPets",
+        90
+      ],
+      [
+        "#AnimalShorts",
+        86
+      ],
+      [
+        "#CuteAnimals",
+        88
+      ],
+      [
+        "#DogShorts",
+        85
+      ],
+      [
+        "#CatShorts",
+        86
+      ],
+      [
+        "#PetCare",
+        82
+      ]
+    ],
+    "Éducation & Savoir": [
+      [
+        "#EducationShorts",
+        90
+      ],
+      [
+        "#LearningTips",
+        86
+      ],
+      [
+        "#StudyWithMe",
+        85
+      ],
+      [
+        "#shortseducation",
+        87
+      ],
+      [
+        "#DidYouKnow",
+        89
+      ],
+      [
+        "#FactsShorts",
+        88
+      ],
+      [
+        "#KnowledgeNuggets",
+        84
+      ],
+      [
+        "#LearnOnShorts",
+        83
+      ],
+      [
+        "#shortsstudy",
+        82
+      ],
+      [
+        "#ScienceShorts",
+        86
+      ],
+      [
+        "#HistoryShorts",
+        84
+      ],
+      [
+        "#LifeHacks",
+        88
+      ]
+    ],
+    "Sport": [
+      [
+        "#SportsShorts",
+        90
+      ],
+      [
+        "#football",
+        88
+      ],
+      [
+        "#soccer",
+        86
+      ],
+      [
+        "#TrickShots",
+        89
+      ],
+      [
+        "#SportsHighlights",
+        87
+      ],
+      [
+        "#BasketballShorts",
+        84
+      ],
+      [
+        "#FitnessChallenge",
+        85
+      ],
+      [
+        "#shortssports",
+        86
+      ],
+      [
+        "#GoalShorts",
+        83
+      ],
+      [
+        "#AthleteLife",
+        81
+      ]
+    ],
+    "Art & DIY": [
+      [
+        "#ArtShorts",
+        90
+      ],
+      [
+        "#shortsart",
+        88
+      ],
+      [
+        "#CreateWithMe",
+        84
+      ],
+      [
+        "#shortscraft",
+        86
+      ],
+      [
+        "#DIYShorts",
+        87
+      ],
+      [
+        "#DrawingShorts",
+        85
+      ],
+      [
+        "#ArtTok",
+        83
+      ],
+      [
+        "#shortsDIY",
+        85
+      ],
+      [
+        "#Crafting",
+        82
+      ],
+      [
+        "#SatisfyingArt",
+        89
+      ]
+    ],
+    "Finance & Business": [
+      [
+        "#FinanceShorts",
+        89
+      ],
+      [
+        "#MoneyTips",
+        87
+      ],
+      [
+        "#InvestingShorts",
+        85
+      ],
+      [
+        "#BusinessShorts",
+        86
+      ],
+      [
+        "#EntrepreneurLife",
+        84
+      ],
+      [
+        "#SideHustle",
+        88
+      ],
+      [
+        "#StockMarket",
+        83
+      ],
+      [
+        "#PassiveIncome",
+        85
+      ],
+      [
+        "#GrowOnYouTube",
+        86
+      ],
+      [
+        "#YouTubeSEO",
+        84
+      ],
+      [
+        "#ContentCreator",
+        87
+      ]
+    ],
+    "Français 🇫🇷": [
+      [
+        "#shortsfr",
+        88
+      ],
+      [
+        "#viralfr",
+        86
+      ],
+      [
+        "#france",
+        84
+      ],
+      [
+        "#français",
+        82
+      ],
+      [
+        "#tiktokfrance",
+        80
+      ],
+      [
+        "#humourfr",
+        83
+      ],
+      [
+        "#drole",
+        81
+      ],
+      [
+        "#francetrend",
+        79
+      ],
+      [
+        "#youtubeurfr",
+        82
+      ],
+      [
+        "#shortsfrance",
+        85
+      ],
+      [
+        "#trendingfr",
+        83
+      ]
+    ]
+  },
+  "seasonal": {
+    "generatedAt": "2026-11-16",
+    "active": [],
+    "label": "Aucun événement saisonnier en cours",
+    "tags": []
+  },
+  "trends": [
+    {
+      "e": "🐾",
+      "t": "Contenu animaux & pets",
+      "d": "Le contenu animaux reste le format le plus engageant : les études 2026 montrent qu'il domine l'engagement sur des dizaines de millions de vidéos. Ajoutez un rebondissement visuel inattendu.",
+      "h": "🔥 ENGAGEMENT MAX"
+    },
+    {
+      "e": "🎵",
+      "t": "Audio tendance + danse",
+      "d": "Les sons tendance adoptés tôt boostent la portée d'environ 21%. Face dancing et lip-sync expressif reviennent fort en 2026. Publiez dans les 48h suivant l'apparition du son.",
+      "h": "⚡ ACTION RAPIDE"
+    },
+    {
+      "e": "🎥",
+      "t": "Mini-vlogs authentiques",
+      "d": "Format à bas coût, ressenti authentique et non scénarisé. Le 'day in the life' court performe très bien pour les comptes lifestyle et personnels.",
+      "h": "📈 EN FORTE CROISSANCE"
+    },
+    {
+      "e": "🤖",
+      "t": "Chaînes faceless & avatar IA",
+      "d": "38% des nouvelles monétisations 2026 sont des chaînes sans visage. Les Shorts faceless avec voix claire ou avatar IA cohérent ont +58% de rétention.",
+      "h": "💰 MONÉTISATION"
+    },
+    {
+      "e": "🎙️",
+      "t": "Histoires narrées par IA",
+      "d": "Récits d'horreur, histoires Reddit et résumés narrés par IA : coût de production inférieur à 3€ par vidéo, format très scalable.",
+      "h": "💸 COÛT MINIMAL"
+    },
+    {
+      "e": "🧠",
+      "t": "Explainers rapides 'Le saviez-vous'",
+      "d": "Réponses aux questions de recherche : 76% de taux de complétion sur les formats 50-60s. Idéal éducation, tutoriels et how-to.",
+      "h": "🎯 SEO FORT"
+    },
+    {
+      "e": "😂",
+      "t": "Sketches 'Friend Group POV'",
+      "d": "Le format 'la colle du groupe d'amis' explose en novembre 2026 : le personnage qui organise tout sans qu'on le lui demande. Parfait pour l'humour relatable.",
+      "h": "🔥 TENDANCE NOV. 2026"
+    },
+    {
+      "e": "😌",
+      "t": "Vidéos satisfaisantes (process)",
+      "d": "Presse hydraulique, slime, sable, mousse : le spectateur reste pour la promesse d'une fin propre. Format 15-30s, facile à produire en série.",
+      "h": "🔁 RÉTENTION"
+    },
+    {
+      "e": "🎨",
+      "t": "Animations meme & animatics",
+      "d": "Templates réutilisables qui se propagent vite dans les fandoms. Idéal pour animateurs et comptes meme.",
+      "h": "🌐 VIRALITÉ COMMUNAUTAIRE"
+    },
+    {
+      "e": "🏆",
+      "t": "Challenges & giveaways",
+      "d": "Enjeux visibles dès la première seconde (argent, temps limite, élimination). Format 30-60s très efficace pour la croissance d'abonnés.",
+      "h": "📊 CROISSANCE"
+    },
+    {
+      "e": "⚽",
+      "t": "Memes personnages publics",
+      "d": "Les personnalités reconnaissables (foot, célébrités) comme punchline visuelle rapide fonctionnent très bien en ce moment.",
+      "h": "🎯 NICHE SPORT"
+    },
+    {
+      "e": "👻",
+      "t": "Transformations & événements saisonniers",
+      "d": "Halloween, fêtes, événements sportifs : les hashtags saisonniers créent des 'ruées vers l'or' de visibilité. Anticipez le calendrier.",
+      "h": "📅 SAISONNIER"
+    }
+  ],
+  "formulas": [
+    [
+      "Personne ne t'a dit que [SUJET]...",
+      "Curiosité + révélation — très fort taux de clic"
+    ],
+    [
+      "5 choses que tu ne savais PAS sur [SUJET]",
+      "Format liste, parfait pour les Shorts éducatifs"
+    ],
+    [
+      "Pourquoi tout le monde parle de [SUJET] en 2026 ?",
+      "Effet de foule + actualité"
+    ],
+    [
+      "J'ai testé [SUJET] pendant 30 jours (résultat choquant)",
+      "Défi personnel + suspense"
+    ],
+    [
+      "Arrête de faire [ERREUR] avec [SUJET] !",
+      "Correction d'erreur = forte valeur perçue"
+    ],
+    [
+      "[SUJET] : la méthode que personne utilise (mais qui marche)",
+      "Exclusivité + bénéfice"
+    ],
+    [
+      "Ce que les pros ne veulent PAS que tu saches sur [SUJET]",
+      "Théorie du complot bienveillante, très cliquable"
+    ],
+    [
+      "[SUJET] en 60 secondes chrono ⏱️",
+      "Promesse de rapidité, idéale Shorts"
+    ],
+    [
+      "Tu fais [SUJET] MAL (et voici comment bien le faire)",
+      "Provocation + solution"
+    ],
+    [
+      "Le secret de [SUJET] enfin révélé 🤫",
+      "Mystère + révélation"
+    ],
+    [
+      "[SUJET] : 3 erreurs qui te coûtent cher",
+      "Perte évitée = motivation forte"
+    ],
+    [
+      "Pourquoi [SUJET] devient viral en ce moment",
+      "Branchement sur la tendance du moment"
+    ],
+    [
+      "Test extrême : [SUJET] niveau IMPOSSIBLE",
+      "Niveau de défi = rétention"
+    ],
+    [
+      "[SUJET] pour débutants : le guide ULTIME 2026",
+      "SEO + audience débutante"
+    ],
+    [
+      "Je parie que tu ne connais pas [SUJET]...",
+      "Défi à l'ego du spectateur"
+    ]
+  ],
+  "tips": [
+    [
+      "La formule en 3 niveaux",
+      "Combinez toujours : 1-2 tags larges (#Shorts, #viral) + 2-3 tags de niche + 1-2 tags longue traîne hyper-spécifiques liés à votre contenu exact."
+    ],
+    [
+      "3 à 5 tags suffisent pour un Short",
+      "Au-delà, vous paraissez spammy et diluez le signal envoyé à l'algorithme. Pour une vidéo longue, jusqu'à 15-20 tags restent acceptables."
+    ],
+    [
+      "Placez les tags au bon endroit",
+      "Mettez les 3 premiers hashtags dans le titre (ou juste après), et la liste complète à la fin de la description pour générer les liens bleus cliquables."
+    ],
+    [
+      "Utilisez la barre de recherche YouTube",
+      "Tapez '#' suivi d'une lettre dans la recherche YouTube : les suggestions montrent les hashtags les plus utilisés et tendances en temps réel."
+    ],
+    [
+      "Surfez sur les événements",
+      "Noël, Coupe du Monde, Halloween, rentrée... les hashtags saisonniers créent des pics de visibilité. Préparez votre contenu 2-3 semaines à l'avance."
+    ],
+    [
+      "Le premier tag doit être #Shorts",
+      "Pour les Shorts, #Shorts est le signal n°1 pour l'algorithme. Il doit toujours être présent, idéalement en premier."
+    ],
+    [
+      "Évitez les tags hors-sujet",
+      "Ajouter #viral sur une vidéo qui n'a rien de viral confond l'algorithme et peut réduire votre engagement. La pertinence prime sur le volume."
+    ],
+    [
+      "Analysez vos concurrents",
+      "Regardez les tags des vidéos qui perforent dans votre niche (via les descriptions) et adaptez-les — ne les copiez pas aveuglément."
+    ],
+    [
+      "Renouvelez vos tags chaque mois",
+      "Les tendances changent vite : ce qui marchait en janvier peut être mort en juin. Rafraîchissez votre stratégie régulièrement."
+    ],
+    [
+      "Combinez tags + audio tendance",
+      "Un tag viral + un son en tendance = double levier de découverte. C'est la combinaison la plus puissante en 2026."
+    ]
+  ]
+}
