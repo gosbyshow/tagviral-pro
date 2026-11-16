@@ -1,10 +1,10 @@
 {
   "meta": {
-    "version": "2026.11.16-c1",
+    "version": "2026.11.16-c2",
     "lastUpdate": "2026-11-16",
-    "cycle": 1,
+    "cycle": 2,
     "autoSeasonal": true,
-    "githubRun": null,
+    "githubRun": "1",
     "nextUpdate": "2026-12-01",
     "stats": {
       "categories": 15,
